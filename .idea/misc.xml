@@ -3,8 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication2/app/src/main/res/layout/activity_main.xml" value="0.17395833333333333" />
+        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication2/app/src/main/res/drawable/bg_diagol.xml" value="0.195" />
+        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication2/app/src/main/res/drawable/ic_baseline_alarm_24.xml" value="0.196" />
+        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication2/app/src/main/res/drawable/ic_launcher_todo_background.xml" value="0.2145" />
+        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication2/app/src/main/res/drawable/round_corner.xml" value="0.195" />
+        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication2/app/src/main/res/layout/activity_add_todo.xml" value="0.25" />
+        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication2/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication2/app/src/main/res/layout/add_todo_dialog.xml" value="0.18697916666666667" />
+        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication2/app/src/main/res/layout/fragment_add_todo.xml" value="0.18802083333333333" />
+        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication2/app/src/main/res/layout/recyclerview_todo_item.xml" value="0.33" />
         <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication2/app/src/main/res/layout/text_row_item.xml" value="0.141015625" />
+        <entry key="..\:/Users/PC/AndroidStudioProjects/MyApplication2/app/src/main/res/mipmap-anydpi-v26/ic_launcher_todo.xml" value="0.2145" />
       </map>
     </option>
   </component>

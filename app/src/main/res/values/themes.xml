@@ -13,4 +13,18 @@
         <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="titleToDo" >
+        <item name="android:gravity">start</item>
+        <item name="android:textSize">17sp</item>
+        <item name="fontFamily">@font/montserratsemibold</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <style name="dateToDo" >
+        <item name="android:gravity">start</item>
+        <item name="android:textSize">17sp</item>
+        <item name="fontFamily">@font/montserratmedium</item>
+    </style>
+
+
 </resources>

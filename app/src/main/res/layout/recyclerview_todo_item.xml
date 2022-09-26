@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:gravity="center"
+    android:layout_margin="15dp"
+
+    android:layout_height="wrap_content">
+    <CheckBox
+
+        android:id="@+id/isCompleteCheckBox"
+        android:gravity="center_horizontal|center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:scaleX="1.30"
+        android:scaleY="1.30"
+        android:layout_marginRight="8dp"
+        />
+    <LinearLayout
+        android:id="@+id/lr1"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <TextView
+
+            tools:text="123"
+            android:id="@+id/todoTextView"
+            android:layout_marginBottom="5dp"
+            style="@style/titleToDo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            />
+
+        <TextView
+            tools:text="123"
+            style="@style/dateToDo"
+            android:id="@+id/dateTodoTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"></TextView>
+    </LinearLayout>
+</LinearLayout>
