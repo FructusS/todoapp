@@ -45,6 +45,7 @@
         android:layout_height="wrap_content">
 
         <ImageButton
+            style="@style/alarmButton"
 
             android:id="@+id/openTimeBtn"
             android:layout_width="wrap_content"

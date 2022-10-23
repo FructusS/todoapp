@@ -3,13 +3,15 @@ package com.example.myapplication
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
-import android.util.Log
 import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
-import com.example.myapplication.model.ToDo
-import com.example.myapplication.viewmodels.ToDoViewModel
-import com.example.myapplication.viewmodels.ToDoViewModelFactory
+import com.example.myapplication.databinding.ActivityAddTodoBinding
+import com.example.myapplication.model.Todo
+import com.example.myapplication.viewmodels.AddTodoViewModel
+import com.example.myapplication.viewmodels.AddTodoViewModelFactory
+
+import com.example.myapplication.viewmodels.TodoViewModelFactory
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -31,49 +33,29 @@ class AddTodoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     private var hour = 0
     private var minute = 0
 
-    private var savedDay = 0
-    private var savedMonth = 0
-    private var savedYear = 0
-    private var savedHour = 0
-    private var savedMinute = 0
+    private lateinit var model: AddTodoViewModel
+    private lateinit var binding: ActivityAddTodoBinding
+    private lateinit var todo: Todo
 
-    private lateinit var model: ToDoViewModel
-
-
-    private lateinit var openTimeBtn: ImageButton
-    private lateinit var toDo: ToDo
-    private lateinit var saveTodoBtn: Button
-    private lateinit var timeTV: TextView
-    private lateinit var todoEditText: EditText
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add_todo)
+        binding  = ActivityAddTodoBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
         val intent = intent.extras
-        if(intent != null){
-            toDo = intent.getSerializable(ToDo::class.java.simpleName) as ToDo
-
-        }
-
-        val modelfactory = ToDoViewModelFactory(application)
-
-        model = ViewModelProvider(this, modelfactory)[ToDoViewModel::class.java]
 
 
 
+        val modelfactory = AddTodoViewModelFactory(application)
+
+        model = ViewModelProvider(this, modelfactory )[AddTodoViewModel::class.java]
 
 
+        binding.saveTodoBtn.setOnClickListener { view ->
 
-        openTimeBtn = findViewById(R.id.openTimeBtn)
-        saveTodoBtn = findViewById(R.id.saveTodoBtn)
-        timeTV = findViewById(R.id.timeTV)
-        todoEditText = findViewById(R.id.todoEditText)
-
-
-        saveTodoBtn.setOnClickListener { view ->
-
-
-            if (todoEditText.text.toString() != "") {
-               val title =  if (todoEditText.text.toString() == "")  toDo.title else todoEditText.text.toString()
+          //  createTodo(intent)
+            if (binding.todoEditText.text.toString() != "") {
+               val title =  if (binding.todoEditText.text.toString() == "")  todo.title else binding.todoEditText.text.toString()
                 var datetime: LocalDateTime? = try {
                     LocalDateTime.of(model.savedYear, model.savedMonth, model.savedDay, model.savedHour, model.savedMinute)
                 } catch (e: DateTimeException) {
@@ -81,7 +63,7 @@ class AddTodoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                 }
 
 
-                if (datetime == null) datetime = LocalDateTime.ofInstant(toDo.time?.let {
+                if (datetime == null) datetime = LocalDateTime.ofInstant(todo.time?.let {
                     Instant.ofEpochSecond(
                         it
                     )
@@ -90,7 +72,7 @@ class AddTodoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
                 GlobalScope.launch(Dispatchers.IO) {
 
                     model.insert(
-                        ToDo(
+                        Todo(
                             null, title, false, datetime?.atZone(
                                 ZoneId.systemDefault()
                             )?.toEpochSecond()
@@ -113,16 +95,31 @@ class AddTodoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
 
 
-        openTimeBtn.setOnClickListener {
+    binding.openTimeBtn.setOnClickListener {
             getDateTimeCalendar()
             DatePickerDialog(this, this, year, month, day).show()
         }
 
     }
 
+    private fun createTodo(intent: Bundle?) {
+
+        var datetime: LocalDateTime? = try {
+                    LocalDateTime.of(model.savedYear, model.savedMonth, model.savedDay, model.savedHour, model.savedMinute)
+                } catch (e: DateTimeException) {
+                    null
+                }
+        if (intent !=null){
+            todo = Todo(intent.getInt("tId"),intent.getString("title").toString(),intent.getBoolean("isComplete"),intent.getLong("time"))
+        }
+        else{
+
+        }
+
+    }
 
 
-private fun getDateTimeCalendar() {
+    private fun getDateTimeCalendar() {
     val cal: Calendar = Calendar.getInstance()
 
     day = cal.get(Calendar.DAY_OF_MONTH)
@@ -150,7 +147,7 @@ override fun onTimeSet(p0: TimePicker?, p1: Int, p2: Int) {
     model.savedMinute = p2
     val datetime = LocalDateTime.of(model.savedYear, model.savedMonth, model.savedDay, model.savedHour, model.savedMinute)
     val selectedDatetime = datetime.format(formatter).lowercase()
-    timeTV.text = selectedDatetime
+    binding.timeTV.text = selectedDatetime
 
 
 }

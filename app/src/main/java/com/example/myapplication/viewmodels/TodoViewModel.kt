@@ -4,22 +4,15 @@ import android.app.Application
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import com.example.myapplication.data.AppDatabase
-import com.example.myapplication.model.ToDo
+import com.example.myapplication.model.Todo
 
-class ToDoViewModel(application: Application): ViewModel() {
+class TodoViewModel(application: Application): ViewModel() {
     private val db: AppDatabase = AppDatabase.getDatabase(application)
-    internal val allToDo : LiveData<List<ToDo>> = db.todoDao().getAll()
+    internal val allTodo : LiveData<List<Todo>> = db.todoDao().getAll()
 
-    fun insert(todo: ToDo){
-        db.todoDao().insert(todo)
-    }
-    fun removeTodo(todo: ToDo){
+    fun removeTodo(todo: Todo){
         db.todoDao().removeTodo(todo)
 
     }
-    var savedDay = 0
-    var savedMonth = 0
-    var savedYear = 0
-    var savedHour = 0
-    var savedMinute = 0
+
 }

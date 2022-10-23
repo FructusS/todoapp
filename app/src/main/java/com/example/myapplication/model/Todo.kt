@@ -7,7 +7,7 @@ import java.io.Serializable
 
 @Entity(tableName = "todo")
 
-data class ToDo(
+data class Todo(
     @PrimaryKey(autoGenerate = true) var id:Int?,
     @ColumnInfo(name = "title") var title: String,
 

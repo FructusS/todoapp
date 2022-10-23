@@ -7,13 +7,13 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 import com.example.myapplication.DateConverter
-import com.example.myapplication.model.ToDo
+import com.example.myapplication.model.Todo
 
 
-@Database(entities = [ToDo::class], version = 1, exportSchema = true)
+@Database(entities = [Todo::class], version = 1, exportSchema = true)
 @TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
-    abstract fun todoDao(): ToDoDao
+    abstract fun todoDao(): TodoDao
 
 
 
