@@ -10,6 +10,7 @@ import com.example.myapplication.databinding.ActivityAddTodoBinding
 import com.example.myapplication.model.Todo
 import com.example.myapplication.viewmodels.AddTodoViewModel
 import com.example.myapplication.viewmodels.AddTodoViewModelFactory
+import com.example.myapplication.viewmodels.TodoViewModel
 
 import com.example.myapplication.viewmodels.TodoViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -33,7 +34,7 @@ class AddTodoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
     private var hour = 0
     private var minute = 0
 
-    private lateinit var model: AddTodoViewModel
+    private lateinit var todoViewModel: TodoViewModel
     private lateinit var binding: ActivityAddTodoBinding
     private lateinit var todo: Todo
 
@@ -46,49 +47,56 @@ class AddTodoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
 
 
-        val modelfactory = AddTodoViewModelFactory(application)
+        val modelFactory = TodoViewModelFactory(application)
 
-        model = ViewModelProvider(this, modelfactory )[AddTodoViewModel::class.java]
+        todoViewModel = ViewModelProvider(this, modelFactory)[TodoViewModel::class.java]
 
 
         binding.saveTodoBtn.setOnClickListener { view ->
-
-          //  createTodo(intent)
-            if (binding.todoEditText.text.toString() != "") {
-               val title =  if (binding.todoEditText.text.toString() == "")  todo.title else binding.todoEditText.text.toString()
-                var datetime: LocalDateTime? = try {
-                    LocalDateTime.of(model.savedYear, model.savedMonth, model.savedDay, model.savedHour, model.savedMinute)
-                } catch (e: DateTimeException) {
-                    null
-                }
-
-
-                if (datetime == null) datetime = LocalDateTime.ofInstant(todo.time?.let {
-                    Instant.ofEpochSecond(
-                        it
-                    )
-                },TimeZone.getDefault().toZoneId())
-
-                GlobalScope.launch(Dispatchers.IO) {
-
-                    model.insert(
-                        Todo(
-                            null, title, false, datetime?.atZone(
-                                ZoneId.systemDefault()
-                            )?.toEpochSecond()
-                        )
-                    )
-
-
-                }
-                onBackPressed()
-            } else {
-
-                Snackbar.make(view, "Похоже на пустое задание", Snackbar.LENGTH_LONG)
-                    .setAction("Action", null)
-                    .show()
-
-            }
+            val todo = Todo(
+                id = null,
+                title = binding.todoEditText.text.toString(),
+                time = 1000000L,
+                isComplete = false
+            )
+            todoViewModel.saveTodo(todo)
+            onBackPressed()
+//            createTodo(intent)
+//            if (binding.todoEditText.text.toString() != "") {
+//               val title =  if (binding.todoEditText.text.toString() == "")  todo.title else binding.todoEditText.text.toString()
+//                var datetime: LocalDateTime? = try {
+//                    LocalDateTime.of(model.savedYear, model.savedMonth, model.savedDay, model.savedHour, model.savedMinute)
+//                } catch (e: DateTimeException) {
+//                    null
+//                }
+//
+//
+//                if (datetime == null) datetime = LocalDateTime.ofInstant(todo.time?.let {
+//                    Instant.ofEpochSecond(
+//                        it
+//                    )
+//                },TimeZone.getDefault().toZoneId())
+//
+//                GlobalScope.launch(Dispatchers.IO) {
+//
+//                    model.insert(
+//                        Todo(
+//                            null, title, false, datetime?.atZone(
+//                                ZoneId.systemDefault()
+//                            )?.toEpochSecond()
+//                        )
+//                    )
+//
+//
+//                }
+//                onBackPressed()
+//            } else {
+//
+//                Snackbar.make(view, "Похоже на пустое задание", Snackbar.LENGTH_LONG)
+//                    .setAction("Action", null)
+//                    .show()
+//
+//            }
 
 
         }
@@ -104,17 +112,17 @@ class AddTodoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 
     private fun createTodo(intent: Bundle?) {
 
-        var datetime: LocalDateTime? = try {
-                    LocalDateTime.of(model.savedYear, model.savedMonth, model.savedDay, model.savedHour, model.savedMinute)
-                } catch (e: DateTimeException) {
-                    null
-                }
-        if (intent !=null){
-            todo = Todo(intent.getInt("tId"),intent.getString("title").toString(),intent.getBoolean("isComplete"),intent.getLong("time"))
-        }
-        else{
-
-        }
+//        var datetime: LocalDateTime? = try {
+//                    LocalDateTime.of(model.savedYear, model.savedMonth, model.savedDay, model.savedHour, model.savedMinute)
+//                } catch (e: DateTimeException) {
+//                    null
+//                }
+//        if (intent !=null){
+//            todo = Todo(intent.getInt("tId"),intent.getString("title").toString(),intent.getBoolean("isComplete"),intent.getLong("time"))
+//        }
+//        else{
+//
+//        }
 
     }
 
@@ -132,22 +140,22 @@ class AddTodoActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener,
 }
 
 override fun onDateSet(p0: DatePicker?, year: Int, month: Int, dayOfMonth: Int) {
-    model.savedDay = dayOfMonth
-    model.savedYear = year
-    model.savedMonth = month
-
-
-    getDateTimeCalendar()
-    TimePickerDialog(this, this, hour, minute, true).show()
+//    model.savedDay = dayOfMonth
+//    model.savedYear = year
+//    model.savedMonth = month
+//
+//
+//    getDateTimeCalendar()
+//    TimePickerDialog(this, this, hour, minute, true).show()
 }
 
 override fun onTimeSet(p0: TimePicker?, p1: Int, p2: Int) {
-    val formatter = DateTimeFormatter.ofPattern("dd MMM. yyyy г., HH:mm")
-    model.savedHour = p1
-    model.savedMinute = p2
-    val datetime = LocalDateTime.of(model.savedYear, model.savedMonth, model.savedDay, model.savedHour, model.savedMinute)
-    val selectedDatetime = datetime.format(formatter).lowercase()
-    binding.timeTV.text = selectedDatetime
+//    val formatter = DateTimeFormatter.ofPattern("dd MMM. yyyy г., HH:mm")
+//    model.savedHour = p1
+//    model.savedMinute = p2
+//    val datetime = LocalDateTime.of(model.savedYear, model.savedMonth, model.savedDay, model.savedHour, model.savedMinute)
+//    val selectedDatetime = datetime.format(formatter).lowercase()
+//    binding.timeTV.text = selectedDatetime
 
 
 }

@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.example.myapplication.CompletedActivity
 import com.example.myapplication.R
 import com.example.myapplication.databinding.RecyclerviewTodoItemBinding
 import com.example.myapplication.model.Todo
@@ -19,11 +20,12 @@ import java.time.format.DateTimeFormatter
 import java.util.*
 
 
-class TodoListAdapter (onClickListener : ITodoListener) : ListAdapter<Todo, TodoListAdapter.ToDoViewHolder>(
+class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoListAdapter.ToDoViewHolder>(
     ToDoViewHolder.TodoComparator()) , Filterable{
 
     private val listener: ITodoListener = onClickListener
     private var todoList: List<Todo> =  arrayListOf()
+    private var todoListfalse: List<Todo> =  arrayListOf()
     private var filteredtodoList: List<Todo> = arrayListOf()
 
 
@@ -47,6 +49,8 @@ class TodoListAdapter (onClickListener : ITodoListener) : ListAdapter<Todo, Todo
     fun setList(todo : List<Todo>){
 
         this.todoList = todo
+
+        notifyDataSetChanged()
         submitList(todo)
 
     }
@@ -57,7 +61,7 @@ class TodoListAdapter (onClickListener : ITodoListener) : ListAdapter<Todo, Todo
         fun bind(todo: Todo, listener: ITodoListener){
             binding.todoTextView.text = todo.title
 
-            binding.isCompleteCheckBox.isChecked = todo.isComplete
+
             if(todo.time != null){
                 binding.dateTodoTextView.setTextColor(ContextCompat.getColor(itemView.context ,
                     R.color.timeRedColor
@@ -66,15 +70,16 @@ class TodoListAdapter (onClickListener : ITodoListener) : ListAdapter<Todo, Todo
                 binding.dateTodoTextView.text = convertToLocalDateTime(todo.time)
             }
 
-            binding.isCompleteCheckBox.setOnCheckedChangeListener{ buttonView, isChecked ->
-                listener.onCheckboxClicked(buttonView)
-            }
+
 
             binding.root.setOnLongClickListener{
-                listener.onLongClickItem(todo)
+                listener.onLongClickItem(todo , position)
                 return@setOnLongClickListener true
 
-        }
+            }
+
+
+
 
 
 
@@ -107,11 +112,12 @@ class TodoListAdapter (onClickListener : ITodoListener) : ListAdapter<Todo, Todo
 }
 
     interface ITodoListener {
+        fun onItemComplete(item: Todo, position: Int)
+        fun onItemNotComplete(item: Todo, position: Int)
+        fun onLongClickItem(item: Todo,position: Int)
 
-
-        fun onCheckboxClicked(view: View)
-        fun onLongClickItem(item: Todo)
     }
+
 
     override fun getFilter(): Filter {
         return object : Filter(){
@@ -133,8 +139,8 @@ class TodoListAdapter (onClickListener : ITodoListener) : ListAdapter<Todo, Todo
                     filteredList
                 }
 
-
-
+                Log.i("123",todoList.size.toString())
+                Log.i("123",filteredtodoList.size.toString())
                 val filterResults = FilterResults()
                 filterResults.values = filteredtodoList
 
@@ -150,6 +156,14 @@ class TodoListAdapter (onClickListener : ITodoListener) : ListAdapter<Todo, Todo
 
         }
     }
+
+    fun onItemComplete(position: Int) {
+        listener.onItemComplete(todoList[position], position)
+    }
+    fun onItemNotComplete(position: Int) {
+        listener.onItemNotComplete(todoList[position], position)
+    }
+
 
 }
 

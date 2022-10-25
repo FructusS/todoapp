@@ -6,16 +6,6 @@
     android:gravity="center"
     android:layout_margin="15dp"
     android:layout_height="wrap_content">
-    <CheckBox
-
-        android:id="@+id/isCompleteCheckBox"
-        android:gravity="center_horizontal|center_vertical"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:scaleX="1.30"
-        android:scaleY="1.30"
-        android:layout_marginRight="8dp"
-        />
     <LinearLayout
         android:id="@+id/lr1"
         android:layout_width="match_parent"

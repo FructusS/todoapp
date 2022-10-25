@@ -6,17 +6,21 @@ import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.Menu
+import android.view.MenuItem
 import android.view.View
 import android.widget.CheckBox
 import android.widget.SearchView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.adapters.TodoListAdapter
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.model.Todo
+import com.example.myapplication.utils.SwipeToCompleteCallback
 import com.example.myapplication.viewmodels.TodoViewModel
 import com.example.myapplication.viewmodels.TodoViewModelFactory
 import com.google.android.material.snackbar.Snackbar
@@ -40,17 +44,17 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
 
         todoViewModel = ViewModelProvider(this, modelFactory)[TodoViewModel::class.java]
 
-        todoAdapter = TodoListAdapter(this)
 
+        binding.recyclerview.layoutManager = LinearLayoutManager(this)
+        todoAdapter = TodoListAdapter(this)
+        ItemTouchHelper(SwipeToCompleteCallback(todoAdapter,applicationContext,false)).attachToRecyclerView(binding.recyclerview)
 
         binding.recyclerview.adapter = todoAdapter
 
-        todoAdapter.notifyDataSetChanged()
-        binding.recyclerview.layoutManager = LinearLayoutManager(this)
-        todoViewModel.allTodo.observe(this) { todo ->
 
-            todo?.let { todoAdapter.setList(it) }
-        }
+        todoViewModel.getTodoList().observe(this, Observer {
+            todoAdapter.setList(it)
+        })
 
         binding.fab.setOnClickListener {
             val intent = Intent(this, AddTodoActivity::class.java)
@@ -62,7 +66,7 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
 
     }
 
-    private fun editRemoveTodo( todo :Todo){
+    private fun editRemoveTodo( todo :Todo, position : Int){
         val alertDialog = AlertDialog.Builder(this)
             .setItems(R.array.dialog_list) { dialog, which ->
                 if (which == 0) {
@@ -75,9 +79,7 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
 
                     startActivity(intent)
                 } else {
-
-                    todoViewModel.removeTodo(todo)
-
+                    todoViewModel.deleteTodo(todo)
                 }
                 dialog.dismiss()
             }
@@ -85,30 +87,18 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
         alertDialog.show()
     }
 
+    override fun onItemComplete(item: Todo, position: Int) {
+        todoViewModel.completeTodo(item)
+
+    }
+
+    override fun onItemNotComplete(item: Todo, position: Int) {
+        todoViewModel.notcompleteTodo(item)
+    }
 
 
-    override fun onCheckboxClicked(view: View) {
-        if (view is CheckBox) {
-            val checked: Boolean = view.isChecked
-
-
-                    if (checked) {
-                        Snackbar.make(view, "Похоже на пустое задание", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null)
-                            .show()
-                    } else {
-                        Snackbar.make(view, "Похоже на пустое задание", Snackbar.LENGTH_LONG)
-                            .setAction("Action", null)
-                            .show()
-                    }
-
-
-            }
-        }
-
-
-    override fun onLongClickItem(item: Todo) {
-        editRemoveTodo(item)
+    override fun onLongClickItem(item: Todo , position: Int) {
+        editRemoveTodo(item,position)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -132,6 +122,19 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
 
         })
         return true
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when(item.itemId){
+            R.id.search -> true
+            R.id.archived -> {
+                val intent = Intent(this,CompletedActivity::class.java)
+                this.startActivity(intent)
+                return true
+
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 
 }

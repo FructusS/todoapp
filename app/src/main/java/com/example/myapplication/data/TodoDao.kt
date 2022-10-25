@@ -7,19 +7,22 @@ import com.example.myapplication.model.Todo
 
 @Dao
 interface TodoDao {
-    @Query("SELECT * FROM todo")
-//    fun getAll(): LiveData<List<Todo>>
-   fun getAll(): LiveData<List<Todo>>
+    @Query("SELECT * FROM todo where isComplete = 0 ")
+    fun getTodoList(): LiveData<List<Todo>>
+
+
+    @Query("SELECT * FROM todo where isComplete = 1")
+    fun getCompleteTodoList(): LiveData<List<Todo>>
+
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insert(todo: Todo)
+    fun saveTodo(todo: Todo)
 
-    @Query("SELECT * FROM todo where id=:uid")
-    fun getTodoItem(uid:Int) : Todo
+
 
     @Update
     fun updateTodo(todo: Todo)
 
     @Delete
-    fun removeTodo(todo: Todo)
+    fun deleteTodo(todo: Todo)
 }
