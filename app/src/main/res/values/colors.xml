@@ -11,4 +11,7 @@
     <color name="timeRedColor">#db332a</color>
     <color name="redColor">#e32417</color>
     <color name="grayTintAlarmBtn">#84858a</color>
+    <color name="backgroundRvColor">#FAF8F8</color>
+    <color name="backgroundRvColorNight">#656565</color>
+
 </resources>

@@ -10,14 +10,13 @@ import kotlinx.coroutines.runBlocking
 class TodoRepository(application: Application) {
     private val  todoDao : TodoDao
     private val todoList: LiveData<List<Todo>>
-    private val todoComleteList: LiveData<List<Todo>>
+    private val todoCompleteList: LiveData<List<Todo>>
 
     init {
         val db = AppDatabase.getDatabase(application.applicationContext)
         todoDao = db.todoDao()
-        todoList = todoDao.getTodoList();
-        todoComleteList = todoDao.getCompleteTodoList();
-
+        todoList = todoDao.getTodoList()
+        todoCompleteList = todoDao.getCompleteTodoList()
 
 
     }
@@ -37,10 +36,10 @@ class TodoRepository(application: Application) {
         }
     }
     fun getTodoList() : LiveData<List<Todo>> {
-        return todoList;
+        return todoList
     }
     fun getCompleteTodoList() : LiveData<List<Todo>> {
-        return todoComleteList;
+        return todoCompleteList
     }
 
 

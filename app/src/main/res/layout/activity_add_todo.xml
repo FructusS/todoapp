@@ -11,49 +11,50 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <LinearLayout
+        android:orientation="vertical">
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-            <EditText
-
-                android:id="@+id/todoEditText"
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/todoTitleText"
                 android:layout_width="match_parent"
-                android:hint="Task"
+                android:hint="Заголовок"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:background="@android:color/transparent"
                 android:layout_height="wrap_content">
-            </EditText>
-        </LinearLayout>
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+        <com.google.android.material.textfield.TextInputLayout
+            app:errorEnabled="true"
+            android:id="@+id/todoTextError"
+
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/todoDescriptionText"
+                android:layout_width="match_parent"
+                android:hint="Описание"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:background="@android:color/transparent"
+                android:layout_height="wrap_content">
+
+            </com.google.android.material.textfield.TextInputEditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
 
 
 
     </LinearLayout>
-    <TextView
-        android:id="@+id/timeTV"
-        android:textSize="20dp"
-        tools:text="123"
-        android:layout_marginBottom="4dp"
-        android:layout_marginTop="4dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
 
-    </TextView>
     <RelativeLayout
         android:layout_gravity="center"
         android:orientation="horizontal"
         android:layout_width="match_parent"
 
         android:layout_height="wrap_content">
-
-        <ImageButton
-            style="@style/alarmButton"
-
-            android:id="@+id/openTimeBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:background="@android:color/transparent"
-            android:src="@drawable/ic_baseline_alarm_24"></ImageButton>
-
 
         <Button
             android:id="@+id/saveTodoBtn"
@@ -62,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Save"></Button>
+            android:text="Save" />
     </RelativeLayout>
 
 </LinearLayout>

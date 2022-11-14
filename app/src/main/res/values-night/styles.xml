@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AddFloatingButton">
+        <item name="android:backgroundTint">#CCCCCC</item>
+        <item name="android:src">@drawable/ic_baseline_add_24</item>
+    </style>
+    <style name="titleToDo" >
+        <item name="android:gravity">start</item>
+        <item name="android:textSize">17sp</item>
+        <item name="fontFamily">@font/montserratsemibold</item>
+        <item name="android:textColor">@color/white</item>
+
+    </style>
+
+    <style name="alarmButton" >
+        <item name="tint">@color/white</item>
+
+
+    </style>
+    <style name="backgroundRV">
+        <item name="background">@color/backgroundRvColorNight</item>
+    </style>
+    <style name="itemRV">
+        <item name="backgroundTint">#B3B2B2</item>
+        <item name="android:clipToPadding">false</item>
+        <item name="cardCornerRadius">8dp</item>
+        <item name="cardPreventCornerOverlap">false</item>
+        <item name="cardUseCompatPadding">true</item>
+        <item name="android:layout_margin">15dp</item>
+
+
+    </style>
+</resources>

@@ -3,8 +3,6 @@ package com.example.myapplication.viewmodels
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
-import androidx.lifecycle.ViewModel
-import com.example.myapplication.data.AppDatabase
 import com.example.myapplication.data.TodoRepository
 import com.example.myapplication.model.Todo
 
@@ -27,12 +25,15 @@ class TodoViewModel(application: Application): AndroidViewModel(application) {
     fun saveTodo(todo: Todo){
         repository.saveTodo(todo)
     }
+    fun updateTodo(todo: Todo){
+        repository.updateTodo(todo)
+    }
 
     fun completeTodo(todo: Todo){
         todo.isComplete = true
         repository.updateTodo(todo)
     }
-    fun notcompleteTodo(todo: Todo){
+    fun notCompleteTodo(todo: Todo){
         todo.isComplete = false
         repository.updateTodo(todo)
     }

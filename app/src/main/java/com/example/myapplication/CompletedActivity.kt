@@ -1,10 +1,8 @@
 package com.example.myapplication
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -19,7 +17,7 @@ class CompletedActivity : AppCompatActivity(), TodoListAdapter.ITodoListener {
     private lateinit var binding : ActivityCompletedBinding
     private lateinit var todoViewModel: TodoViewModel
     private lateinit var adapter: TodoListAdapter
-    private lateinit var list : List<Todo>
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -33,10 +31,10 @@ class CompletedActivity : AppCompatActivity(), TodoListAdapter.ITodoListener {
         adapter = TodoListAdapter(this)
         binding.recyclerviewTodo.adapter = adapter
 
-        todoViewModel.getCompleteTodoList().observe(this, Observer {
+        todoViewModel.getCompleteTodoList().observe(this) {
             adapter.setList(it)
-        })
-        list = listOf()
+        }
+
 
         ItemTouchHelper(SwipeToCompleteCallback(adapter,applicationContext,true)).attachToRecyclerView(binding.recyclerviewTodo)
 
@@ -47,26 +45,17 @@ class CompletedActivity : AppCompatActivity(), TodoListAdapter.ITodoListener {
     }
 
     override fun onItemNotComplete(item: Todo, position: Int) {
-        todoViewModel.notcompleteTodo(item)
+        todoViewModel.notCompleteTodo(item)
     }
 
-    override fun onLongClickItem(item: Todo, position: Int) {
-        editRemoveTodo(item,position)
+    override fun onLongClickItem(item: Todo) {
+        editRemoveTodo(item)
     }
 
-    private fun editRemoveTodo(item: Todo, position: Int) {
+    private fun editRemoveTodo(item: Todo) {
         val alertDialog = AlertDialog.Builder(this)
-            .setItems(R.array.dialog_list) { dialog, which ->
+            .setItems(R.array.dialog_list_completed_todo) { dialog, which ->
                 if (which == 0) {
-
-                    intent.putExtra("tId", item.id)
-                    intent.putExtra("title", item.title)
-                    intent.putExtra("time", item.time)
-                    intent.putExtra("isComplete", item.isComplete)
-                    intent.putExtra(Todo::class.java.simpleName , item )
-
-                    startActivity(intent)
-                } else {
                     todoViewModel.deleteTodo(item)
                 }
                 dialog.dismiss()

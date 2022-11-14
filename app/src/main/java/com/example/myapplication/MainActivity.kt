@@ -4,30 +4,25 @@ import android.app.SearchManager
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.CheckBox
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplication.adapters.TodoListAdapter
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.model.Todo
+import com.example.myapplication.utils.Constants
 import com.example.myapplication.utils.SwipeToCompleteCallback
 import com.example.myapplication.viewmodels.TodoViewModel
 import com.example.myapplication.viewmodels.TodoViewModelFactory
-import com.google.android.material.snackbar.Snackbar
 
 
 class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
-    private val TAG = "123"
+
     private lateinit var binding : ActivityMainBinding
     private lateinit var todoViewModel: TodoViewModel
     private lateinit var searchView: SearchView
@@ -52,12 +47,13 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
         binding.recyclerview.adapter = todoAdapter
 
 
-        todoViewModel.getTodoList().observe(this, Observer {
+        todoViewModel.getTodoList().observe(this) {
             todoAdapter.setList(it)
-        })
+        }
 
-        binding.fab.setOnClickListener {
+        binding.addTodoBtn.setOnClickListener {
             val intent = Intent(this, AddTodoActivity::class.java)
+            Constants.ADD_TODO = 1
             startActivity(intent)
         }
 
@@ -66,17 +62,13 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
 
     }
 
-    private fun editRemoveTodo( todo :Todo, position : Int){
+    private fun editRemoveTodo( todo :Todo){
         val alertDialog = AlertDialog.Builder(this)
             .setItems(R.array.dialog_list) { dialog, which ->
                 if (which == 0) {
-
-                    intent.putExtra("tId", todo.id)
-                    intent.putExtra("title", todo.title)
-                    intent.putExtra("time", todo.time)
-                    intent.putExtra("isComplete", todo.isComplete)
-                    intent.putExtra(Todo::class.java.simpleName , todo )
-
+                    Constants.EDIT_TODO = 1
+                    val intent = Intent(this, AddTodoActivity::class.java)
+                    intent.putExtra(Todo::class.java.simpleName , todo)
                     startActivity(intent)
                 } else {
                     todoViewModel.deleteTodo(todo)
@@ -93,12 +85,12 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
     }
 
     override fun onItemNotComplete(item: Todo, position: Int) {
-        todoViewModel.notcompleteTodo(item)
+        todoViewModel.notCompleteTodo(item)
     }
 
 
-    override fun onLongClickItem(item: Todo , position: Int) {
-        editRemoveTodo(item,position)
+    override fun onLongClickItem(item: Todo) {
+        editRemoveTodo(item)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

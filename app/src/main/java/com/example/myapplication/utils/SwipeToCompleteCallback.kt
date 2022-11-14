@@ -26,7 +26,7 @@ class SwipeToCompleteCallback(private var todoListAdapter: TodoListAdapter,
     }
 
     override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
-        val position = viewHolder.adapterPosition;
+        val position = viewHolder.adapterPosition
         if (!isComplete) {
 
             todoListAdapter.onItemComplete(position)
@@ -55,7 +55,7 @@ class SwipeToCompleteCallback(private var todoListAdapter: TodoListAdapter,
             true -> {
                 when{
                     dX > 0->{
-                        val iconMargin: Int = icon.intrinsicWidth / 2;
+                        val iconMargin: Int = icon.intrinsicWidth / 2
                         val iconTop: Int =
                             itemView.top + (itemView.height - icon.intrinsicHeight) / 2
                         val iconBottom = iconTop + icon.intrinsicHeight
@@ -64,7 +64,7 @@ class SwipeToCompleteCallback(private var todoListAdapter: TodoListAdapter,
                             itemView.left + iconMargin + icon.intrinsicWidth
 
                         icon = ContextCompat.getDrawable(context, R.drawable.ic_check_24)!!
-                        background = ColorDrawable(ContextCompat.getColor(context, R.color.redColor))
+                        background = ColorDrawable(ContextCompat.getColor(context, R.color.isCheckColor))
 
                         icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
                         background.setBounds(
@@ -75,13 +75,14 @@ class SwipeToCompleteCallback(private var todoListAdapter: TodoListAdapter,
 
                     else -> { // view is unSwiped
                         background.setBounds(0, 0, 0, 0)
+                        icon.setBounds(0,0,0,0)
                     }
                 }
                 background.draw(c)
                 icon.draw(c)
             }
             false ->{
-                val iconMargin: Int = icon.intrinsicWidth / 2;
+                val iconMargin: Int = icon.intrinsicWidth / 2
                 val iconTop: Int =
                     itemView.top + (itemView.height - icon.intrinsicHeight) / 2
                 val iconBottom = iconTop + icon.intrinsicHeight
@@ -102,6 +103,7 @@ class SwipeToCompleteCallback(private var todoListAdapter: TodoListAdapter,
                     }
                     else -> {
                         background.setBounds(0,0,0,0)
+                        icon.setBounds(0,0,0,0)
                     }
 
                 }

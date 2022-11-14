@@ -5,19 +5,19 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
-import com.example.myapplication.utils.DateConverter
 import com.example.myapplication.model.Todo
 
 
-@Database(entities = [Todo::class], version = 1, exportSchema = true)
-@TypeConverters(DateConverter::class)
+@Database(entities = [Todo::class] ,version = 3)
+//@TypeConverters(DateConverter::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun todoDao(): TodoDao
 
 
 
+
     companion object {
+
 
         // Singleton prevents multiple instances of database opening at the
         // same time.
@@ -32,13 +32,16 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "app_database"
-                ).allowMainThreadQueries()
+                ).fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 // return instance
                 instance
             }
         }
+
+
+
     }
 
 

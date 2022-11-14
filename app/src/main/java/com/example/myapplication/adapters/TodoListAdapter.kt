@@ -1,23 +1,14 @@
 package com.example.myapplication.adapters
 
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myapplication.CompletedActivity
-import com.example.myapplication.R
 import com.example.myapplication.databinding.RecyclerviewTodoItemBinding
 import com.example.myapplication.model.Todo
-import java.time.Instant
-import java.time.LocalDateTime
-import java.time.format.DateTimeFormatter
-import java.util.*
 
 
 class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoListAdapter.ToDoViewHolder>(
@@ -25,8 +16,8 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
 
     private val listener: ITodoListener = onClickListener
     private var todoList: List<Todo> =  arrayListOf()
-    private var todoListfalse: List<Todo> =  arrayListOf()
-    private var filteredtodoList: List<Todo> = arrayListOf()
+
+    private var filteredTodoList: List<Todo> = arrayListOf()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoViewHolder {
@@ -50,7 +41,7 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
 
         this.todoList = todo
 
-        notifyDataSetChanged()
+
         submitList(todo)
 
     }
@@ -59,21 +50,12 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
 
     class ToDoViewHolder(private val binding : RecyclerviewTodoItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(todo: Todo, listener: ITodoListener){
-            binding.todoTextView.text = todo.title
-
-
-            if(todo.time != null){
-                binding.dateTodoTextView.setTextColor(ContextCompat.getColor(itemView.context ,
-                    R.color.timeRedColor
-                ))
-
-                binding.dateTodoTextView.text = convertToLocalDateTime(todo.time)
-            }
-
+            binding.todoTitleTextView.text = todo.title
+            binding.todoDescriptionTextView.text = todo.description
 
 
             binding.root.setOnLongClickListener{
-                listener.onLongClickItem(todo , position)
+                listener.onLongClickItem(todo)
                 return@setOnLongClickListener true
 
             }
@@ -87,10 +69,6 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
         
     }
 
-        private fun convertToLocalDateTime (time : Long?) : String{
-            val formatter = DateTimeFormatter.ofPattern("dd MMM. yyyy г., HH:mm")
-            return LocalDateTime.ofInstant(time?.let { Instant.ofEpochSecond(it) },TimeZone.getDefault().toZoneId()).format(formatter)?.lowercase().toString()
-        }
 
 
     class TodoComparator : DiffUtil.ItemCallback<Todo>() {
@@ -114,7 +92,8 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
     interface ITodoListener {
         fun onItemComplete(item: Todo, position: Int)
         fun onItemNotComplete(item: Todo, position: Int)
-        fun onLongClickItem(item: Todo,position: Int)
+        fun onLongClickItem(item: Todo)
+
 
     }
 
@@ -123,35 +102,37 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
         return object : Filter(){
             override fun performFiltering(p0: CharSequence?): FilterResults {
 
-                val searchtext = p0.toString();
-                //if searchtext is null that filteredtodoList equals todoList else create new list wherein add  items which we find
-                filteredtodoList = if(searchtext.isEmpty()){
+                val searchtext = p0.toString()
+                filteredTodoList = if(searchtext.isEmpty()){
 
                      todoList
                 }
                 else{
                     val filteredList = arrayListOf<Todo>()
                     for(item in todoList){
-                        if(item.title.lowercase().trim().contains(searchtext.lowercase().trim())){
+                        if(!item.title.isNullOrEmpty() &&
+                            item.title!!.lowercase().trim().contains(searchtext.lowercase().trim()) ||
+                            (!item.description.isNullOrEmpty() &&
+                                    item.description!!.lowercase().trim().contains(searchtext.lowercase().trim()))){
                             filteredList.add(item)
                         }
+
                     }
                     filteredList
                 }
 
-                Log.i("123",todoList.size.toString())
-                Log.i("123",filteredtodoList.size.toString())
+
                 val filterResults = FilterResults()
-                filterResults.values = filteredtodoList
+                filterResults.values = filteredTodoList
 
                 return filterResults
 
             }
 
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
-                filteredtodoList = p1?.values as List<Todo>
+                filteredTodoList = p1?.values as List<Todo>
                 //set list to be displayed
-                submitList(filteredtodoList)
+                submitList(filteredTodoList)
             }
 
         }

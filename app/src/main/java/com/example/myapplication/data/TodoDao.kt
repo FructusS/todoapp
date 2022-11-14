@@ -7,7 +7,7 @@ import com.example.myapplication.model.Todo
 
 @Dao
 interface TodoDao {
-    @Query("SELECT * FROM todo where isComplete = 0 ")
+    @Query("SELECT * FROM todo where isComplete = 0")
     fun getTodoList(): LiveData<List<Todo>>
 
 
