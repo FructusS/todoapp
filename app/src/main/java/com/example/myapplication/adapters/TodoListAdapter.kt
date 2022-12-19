@@ -1,6 +1,7 @@
 package com.example.myapplication.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import android.widget.Filter
 import android.widget.Filterable
@@ -16,32 +17,24 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
 
     private val listener: ITodoListener = onClickListener
     private var todoList: List<Todo> =  arrayListOf()
-
     private var filteredTodoList: List<Todo> = arrayListOf()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ToDoViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val binding = RecyclerviewTodoItemBinding.inflate(inflater, parent, false)
-
-
         return ToDoViewHolder(binding)
-
-
     }
 
     override fun onBindViewHolder(holder: ToDoViewHolder, position: Int) {
         val todo = getItem(position)
-
         holder.bind(todo,listener)
 
     }
-    // set currentlist in todoList  and set list to be displayed.
+    // set current list in todoList  and set list to be displayed.
     fun setList(todo : List<Todo>){
 
         this.todoList = todo
-
-
         submitList(todo)
 
     }
@@ -50,42 +43,33 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
 
     class ToDoViewHolder(private val binding : RecyclerviewTodoItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(todo: Todo, listener: ITodoListener){
-            binding.todoTitleTextView.text = todo.title
-            binding.todoDescriptionTextView.text = todo.description
+            if (todo.title.isNullOrEmpty()){
+                binding.todoTitleTextView.visibility = View.GONE
+                binding.todoDescriptionTextView.textSize = 19F
+            }
+            else{
+                binding.todoTitleTextView.visibility = View.VISIBLE
+                binding.todoTitleTextView.text = todo.title
+                binding.todoDescriptionTextView.textSize = 17F
+            }
 
+            binding.todoDescriptionTextView.text = todo.description
 
             binding.root.setOnLongClickListener{
                 listener.onLongClickItem(todo)
                 return@setOnLongClickListener true
-
             }
 
-
-
-
-
-
-
-        
     }
-
-
 
     class TodoComparator : DiffUtil.ItemCallback<Todo>() {
         override fun areItemsTheSame(oldItem: Todo, newItem: Todo): Boolean {
             return oldItem === newItem
         }
-
         override fun areContentsTheSame(oldItem: Todo, newItem: Todo): Boolean {
             return oldItem.id == newItem.id
         }
     }
-
-
-
-
-
-
 
 }
 
@@ -102,8 +86,8 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
         return object : Filter(){
             override fun performFiltering(p0: CharSequence?): FilterResults {
 
-                val searchtext = p0.toString()
-                filteredTodoList = if(searchtext.isEmpty()){
+                val searchText = p0.toString()
+                filteredTodoList = if(searchText.isEmpty()){
 
                      todoList
                 }
@@ -111,9 +95,9 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
                     val filteredList = arrayListOf<Todo>()
                     for(item in todoList){
                         if(!item.title.isNullOrEmpty() &&
-                            item.title!!.lowercase().trim().contains(searchtext.lowercase().trim()) ||
+                            item.title!!.lowercase().trim().contains(searchText.lowercase().trim()) ||
                             (!item.description.isNullOrEmpty() &&
-                                    item.description!!.lowercase().trim().contains(searchtext.lowercase().trim()))){
+                                    item.description!!.lowercase().trim().contains(searchText.lowercase().trim()))){
                             filteredList.add(item)
                         }
 
@@ -121,12 +105,9 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
                     filteredList
                 }
 
-
                 val filterResults = FilterResults()
                 filterResults.values = filteredTodoList
-
                 return filterResults
-
             }
 
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {

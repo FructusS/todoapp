@@ -7,7 +7,9 @@
     android:gravity="center"
     android:orientation="vertical"
     android:layout_margin="15dp"
-    tools:context=".AddTodoActivity">
+
+    tools:context=".ui.AddTodoActivity">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -15,14 +17,17 @@
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/todoTitleText"
+                style="@style/TodoEditText"
                 android:layout_width="match_parent"
-                android:hint="Заголовок"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:hint="@string/TitleHint"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:background="@android:color/transparent"
-                android:layout_height="wrap_content">
+                android:textColorHint="#757575">
 
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
@@ -32,14 +37,16 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/todoDescriptionText"
+                style="@style/TodoEditText"
+
                 android:layout_width="match_parent"
-                android:hint="Описание"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:background="@android:color/transparent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:hint="@string/DescriptionHint"
+
+        >
 
             </com.google.android.material.textfield.TextInputEditText>
         </com.google.android.material.textfield.TextInputLayout>
@@ -63,7 +70,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:gravity="center"
-            android:text="Save" />
+            android:text="@string/saveTextButton" />
     </RelativeLayout>
 
 </LinearLayout>
