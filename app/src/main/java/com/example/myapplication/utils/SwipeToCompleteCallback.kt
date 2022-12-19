@@ -14,7 +14,7 @@ class SwipeToCompleteCallback(private var todoListAdapter: TodoListAdapter,
                               private var context: Context,
                               private var isComplete : Boolean
                               ) : ItemTouchHelper.SimpleCallback(0,  ItemTouchHelper.RIGHT){
-    private var icon : Drawable = ContextCompat.getDrawable(context,R.drawable.ic_check_24)!!
+    private var icon : Drawable = ContextCompat.getDrawable(context,R.drawable.ic_baseline_archive_24)!!
     private var background : ColorDrawable = ColorDrawable(ContextCompat.getColor(context,R.color.isCheckColor))
 
     override fun onMove(
@@ -63,8 +63,8 @@ class SwipeToCompleteCallback(private var todoListAdapter: TodoListAdapter,
                         val iconRight: Int =
                             itemView.left + iconMargin + icon.intrinsicWidth
 
-                        icon = ContextCompat.getDrawable(context, R.drawable.ic_check_24)!!
-                        background = ColorDrawable(ContextCompat.getColor(context, R.color.isCheckColor))
+                        icon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_unarchive_24)!!
+                        background = ColorDrawable(ContextCompat.getColor(context, R.color.redColor))
 
                         icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
                         background.setBounds(
@@ -89,7 +89,7 @@ class SwipeToCompleteCallback(private var todoListAdapter: TodoListAdapter,
                 when {
                     dX > 0 ->{// Swiping to the right
 
-                        icon = ContextCompat.getDrawable(context, R.drawable.ic_check_24)!!
+                        icon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_archive_24)!!
                         background = ColorDrawable(ContextCompat.getColor(context, R.color.isCheckColor))
 
 
