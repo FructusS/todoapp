@@ -2,7 +2,8 @@
 <resources>
 
     <style name="AddFloatingButton">
-        <item name="android:src">@drawable/ic_baseline_add_24</item>
+        <item name="android:backgroundTint">@color/purple_500</item>
+        <item name="android:src">@drawable/ic_baseline_add_white_24</item>
     </style>
     <style name="titleToDo" >
         <item name="android:gravity">start</item>
@@ -23,9 +24,16 @@
 
 
     </style>
-    <style name="dateToDo" >
+    <style name="descriptionToDo" >
         <item name="android:gravity">start</item>
         <item name="android:textSize">17sp</item>
         <item name="fontFamily">@font/montserratmedium</item>
     </style>
+
+    <style name="TodoEditText">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:singleLine">true</item>
+    </style>
+
 </resources>

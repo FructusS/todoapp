@@ -2,16 +2,15 @@
 <menu xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:android="http://schemas.android.com/apk/res/android">
     <item android:id="@+id/archived"
-        android:title="checkedTodo"
+        android:title="@string/arhivedtodo"
         app:showAsAction="ifRoom"
-        android:icon="@drawable/ic_check_24">
+        android:icon="@drawable/ic_baseline_archive_24">
 
     </item>
     <item android:id="@+id/search"
         android:title="@string/search_title"
-        
+        app:showAsAction="withText|ifRoom"
         android:icon="@drawable/ic_baseline_search_24"
-        app:showAsAction="collapseActionView|ifRoom"
         app:actionViewClass="android.widget.SearchView" />
 
 </menu>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="saveTextButton">Сохранить</string>
+    <string name="DescriptionHint">Описание</string>
+    <string name="FloatingButtonText">+</string>
+    <string name="arhivedtodo">checkedTodo</string>
+</resources>

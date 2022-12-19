@@ -1,10 +1,15 @@
 <resources>
-    <string name="app_name">Task Manager</string>
+    <string name="app_name">Заметки</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ok">Hello blank fragment</string>
     <string name="order_confirmation">Hello blank fragment</string>
     <string name="search_title">search</string>
+    <string name="saveTextButton">Сохранить</string>
+    <string name="TitleHint">Заголовок</string>
+    <string name="DescriptionHint">Описание</string>
+    <string name="FloatingButtonText">+</string>
+    <string name="arhivedtodo">checkedTodo</string>
     <string-array name="dialog_list">
         <item>Edit</item>
         <item>Delete</item>
