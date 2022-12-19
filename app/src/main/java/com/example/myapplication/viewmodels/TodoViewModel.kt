@@ -12,7 +12,6 @@ class TodoViewModel(application: Application): AndroidViewModel(application) {
 
     fun deleteTodo(todo: Todo){
         repository.deleteTodo(todo)
-
     }
 
     fun getTodoList() :LiveData<List<Todo>>{

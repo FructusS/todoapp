@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.ui
 
 import android.os.Bundle
 import androidx.appcompat.app.AlertDialog
@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.R
 import com.example.myapplication.adapters.TodoListAdapter
 import com.example.myapplication.databinding.ActivityCompletedBinding
 import com.example.myapplication.model.Todo
@@ -22,6 +23,7 @@ class CompletedActivity : AppCompatActivity(), TodoListAdapter.ITodoListener {
         super.onCreate(savedInstanceState)
 
         binding = ActivityCompletedBinding.inflate(layoutInflater)
+
         setContentView(binding.root)
         val modelFactory = TodoViewModelFactory(application)
 
@@ -34,7 +36,6 @@ class CompletedActivity : AppCompatActivity(), TodoListAdapter.ITodoListener {
         todoViewModel.getCompleteTodoList().observe(this) {
             adapter.setList(it)
         }
-
 
         ItemTouchHelper(SwipeToCompleteCallback(adapter,applicationContext,true)).attachToRecyclerView(binding.recyclerviewTodo)
 

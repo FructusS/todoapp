@@ -91,8 +91,6 @@ class SwipeToCompleteCallback(private var todoListAdapter: TodoListAdapter,
 
                         icon = ContextCompat.getDrawable(context, R.drawable.ic_baseline_archive_24)!!
                         background = ColorDrawable(ContextCompat.getColor(context, R.color.isCheckColor))
-
-
                         val iconLeft: Int = itemView.left + iconMargin
                         val iconRight: Int = itemView.left + iconMargin + icon.intrinsicWidth
                         icon.setBounds(iconLeft, iconTop, iconRight, iconBottom)
@@ -105,17 +103,10 @@ class SwipeToCompleteCallback(private var todoListAdapter: TodoListAdapter,
                         background.setBounds(0,0,0,0)
                         icon.setBounds(0,0,0,0)
                     }
-
                 }
                 background.draw(c)
                 icon.draw(c)
             }
-
         }
-
     }
-
-
-
-
 }

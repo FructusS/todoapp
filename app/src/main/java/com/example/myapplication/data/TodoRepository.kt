@@ -17,8 +17,6 @@ class TodoRepository(application: Application) {
         todoDao = db.todoDao()
         todoList = todoDao.getTodoList()
         todoCompleteList = todoDao.getCompleteTodoList()
-
-
     }
     fun saveTodo(todo: Todo) = runBlocking{
         this.launch(Dispatchers.IO) {

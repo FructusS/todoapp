@@ -39,8 +39,6 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
 
     }
 
-
-
     class ToDoViewHolder(private val binding : RecyclerviewTodoItemBinding) : RecyclerView.ViewHolder(binding.root){
         fun bind(todo: Todo, listener: ITodoListener){
             if (todo.title.isNullOrEmpty()){
@@ -54,12 +52,10 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
             }
 
             binding.todoDescriptionTextView.text = todo.description
-
             binding.root.setOnLongClickListener{
                 listener.onLongClickItem(todo)
                 return@setOnLongClickListener true
             }
-
     }
 
     class TodoComparator : DiffUtil.ItemCallback<Todo>() {
@@ -77,15 +73,12 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
         fun onItemComplete(item: Todo, position: Int)
         fun onItemNotComplete(item: Todo, position: Int)
         fun onLongClickItem(item: Todo)
-
-
     }
 
 
     override fun getFilter(): Filter {
         return object : Filter(){
             override fun performFiltering(p0: CharSequence?): FilterResults {
-
                 val searchText = p0.toString()
                 filteredTodoList = if(searchText.isEmpty()){
 
@@ -100,22 +93,18 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
                                     item.description!!.lowercase().trim().contains(searchText.lowercase().trim()))){
                             filteredList.add(item)
                         }
-
                     }
                     filteredList
                 }
-
                 val filterResults = FilterResults()
                 filterResults.values = filteredTodoList
                 return filterResults
             }
-
             override fun publishResults(p0: CharSequence?, p1: FilterResults?) {
                 filteredTodoList = p1?.values as List<Todo>
                 //set list to be displayed
                 submitList(filteredTodoList)
             }
-
         }
     }
 
@@ -125,8 +114,6 @@ class TodoListAdapter(onClickListener: ITodoListener) : ListAdapter<Todo, TodoLi
     fun onItemNotComplete(position: Int) {
         listener.onItemNotComplete(todoList[position], position)
     }
-
-
 }
 
 

@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     style="@style/backgroundRV"
-    tools:context=".CompletedActivity">
+    tools:context=".ui.CompletedActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerviewTodo"

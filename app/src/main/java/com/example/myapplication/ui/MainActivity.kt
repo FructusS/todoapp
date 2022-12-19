@@ -1,4 +1,4 @@
-package com.example.myapplication
+package com.example.myapplication.ui
 
 import android.app.SearchManager
 import android.content.Context
@@ -12,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.myapplication.R
 import com.example.myapplication.adapters.TodoListAdapter
 import com.example.myapplication.databinding.ActivityMainBinding
 import com.example.myapplication.model.Todo
@@ -33,12 +34,9 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
-
         val modelFactory = TodoViewModelFactory(application)
 
         todoViewModel = ViewModelProvider(this, modelFactory)[TodoViewModel::class.java]
-
 
         binding.recyclerview.layoutManager = LinearLayoutManager(this)
         todoAdapter = TodoListAdapter(this)
@@ -56,10 +54,6 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
             Constants.ADD_TODO = 1
             startActivity(intent)
         }
-
-
-
-
     }
 
     private fun editRemoveTodo( todo :Todo){
@@ -76,6 +70,7 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
                 dialog.dismiss()
             }
             .create()
+
         alertDialog.show()
     }
 
@@ -120,7 +115,7 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
         return when(item.itemId){
             R.id.search -> true
             R.id.archived -> {
-                val intent = Intent(this,CompletedActivity::class.java)
+                val intent = Intent(this, CompletedActivity::class.java)
                 this.startActivity(intent)
                 return true
 
@@ -128,7 +123,6 @@ class MainActivity : AppCompatActivity() , TodoListAdapter.ITodoListener{
             else -> super.onOptionsItemSelected(item)
         }
     }
-
 }
 
 

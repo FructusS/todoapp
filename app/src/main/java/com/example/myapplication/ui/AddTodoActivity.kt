@@ -1,7 +1,5 @@
-package com.example.myapplication
+package com.example.myapplication.ui
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
@@ -14,7 +12,6 @@ import com.example.myapplication.viewmodels.TodoViewModelFactory
 
 
 class AddTodoActivity : AppCompatActivity() {
-
 
     private lateinit var todoViewModel: TodoViewModel
     private lateinit var binding: ActivityAddTodoBinding
@@ -38,7 +35,6 @@ class AddTodoActivity : AppCompatActivity() {
         val modelFactory = TodoViewModelFactory(application)
 
         todoViewModel = ViewModelProvider(this, modelFactory)[TodoViewModel::class.java]
-
 
         binding.saveTodoBtn.setOnClickListener {
 
@@ -70,15 +66,9 @@ class AddTodoActivity : AppCompatActivity() {
                     Constants.ADD_TODO = 0
                     finish()
                 }
-
-
             }
-
-
         }
     }
-
-
 
     private fun validateInfo(): Boolean {
         if (binding.todoDescriptionText.text.toString().isEmpty()) {
@@ -86,10 +76,7 @@ class AddTodoActivity : AppCompatActivity() {
             binding.todoTextError.requestFocus()
             return false
         }
-
-
         return true
-
     }
 }
 

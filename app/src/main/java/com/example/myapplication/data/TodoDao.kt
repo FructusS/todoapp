@@ -10,15 +10,11 @@ interface TodoDao {
     @Query("SELECT * FROM todo where isComplete = 0")
     fun getTodoList(): LiveData<List<Todo>>
 
-
     @Query("SELECT * FROM todo where isComplete = 1")
     fun getCompleteTodoList(): LiveData<List<Todo>>
 
-
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     fun saveTodo(todo: Todo)
-
-
 
     @Update
     fun updateTodo(todo: Todo)
